@@ -49,7 +49,20 @@ describe('Testing routes', () => {
     expect(res.status).toEqual(200);
   });
 });
-it('Logs in and posts post', async () => {
+it('Posting Posts Fails Without login', async () => {
+  // await request.agent(app).get('/api/v1/github/callback?code=42').redirects(1);
+  const res = await request(app).post('/api/v1/posts').send({
+    description: 'This is a test',
+  });
+  expect(res.status).toEqual(401);
+});
+
+it('Reading Posts Fails Without login', async () => {
+  // await request.agent(app).get('/api/v1/github/callback?code=42').redirects(1);
+  const res = await request(app).get('/api/v1/posts');
+  expect(res.status).toEqual(401);
+});
+it('Logs in and post a post', async () => {
   const [agent] = await Login();
   // await request.agent(app).get('/api/v1/github/callback?code=42').redirects(1);
   const res = await agent.post('/api/v1/posts').send({
@@ -58,7 +71,7 @@ it('Logs in and posts post', async () => {
   expect(res.status).toEqual(200);
 });
 
-it('Logs in and views posts', async () => {
+it('Log in and views posts', async () => {
   const [agent] = await Login();
   // await request.agent(app).get('/api/v1/github/callback?code=42').redirects(1);
   await agent.post('/api/v1/posts').send({
