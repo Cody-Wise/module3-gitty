@@ -5,7 +5,7 @@ const app = require('../lib/app');
 
 jest.mock('../lib/services/github');
 
-const Login = async (userProps = {}) => {
+const Login = async () => {
   // Create an "agent" that gives us the ability
   // to store cookies between requests in a test
   const agent = request.agent(app);
